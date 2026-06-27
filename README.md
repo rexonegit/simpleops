@@ -325,7 +325,6 @@ backend\datacenter\conf\proxmox.cnf
 # PVE1_VERIFY_SSL=false
 
 Proxmox VE API 配置说明
-1.1 在 PVE 中创建 API 用户
 # 1. 在 PVE 节点上创建 API 用户
 pveum user add cmdb@pve -comment "CMDB Sync User"
 # 2. 创建 API Token（更安全，推荐）
