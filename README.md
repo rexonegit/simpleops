@@ -201,7 +201,7 @@
 **仓库地址**
 
 GitHub
-[https://github.com/rexonegit/simpleops.git](url)
+[https://github.com/rexonegit/simpleops](url)
 
 Gitee
 [https://gitee.com/rexonegit/simpleops](url)
