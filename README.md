@@ -172,6 +172,28 @@
 
 ---
 
+**演示数据效果图展示：**
+
+<table>
+<tr>
+<td>
+<img src="https://github.com/rexonegit/simpleops/blob/main/example/ecs.png">
+</td>
+<td>
+<img src="https://github.com/rexonegit/simpleops/blob/main/example/ip.png">
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://github.com/rexonegit/simpleops/blob/main/example/pve.png">
+</td>
+<td>
+<img src="https://github.com/rexonegit/simpleops/blob/main/example/vmware.png">
+</td>
+</tr>
+</table>
+
+
 **安装数据库和 Python 3.12**
 
 ```
