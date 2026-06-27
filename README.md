@@ -175,8 +175,7 @@
 **安装数据库和 Python 3.12**
 
 ```
-安装
-scripts 下有脚本(适配 Rocky Linux 8.10)
+scripts 下有 MySQL 8、Python 3.12 脚本(适配 Rocky Linux 8.10)
 sh install_mysql.sh
 sh install_python3.12.sh
 ```
@@ -190,7 +189,6 @@ create USER 'django_vue_admin'@'localhost' IDENTIFIED BY '你的密码';
 GRANT ALL PRIVILEGES ON django_vue_admin.* TO 'django_vue_admin'@'localhost';
 
 
-后端
 sudo yum install mysql-devel gcc -y
 cd backend
 pip install -r requirements.txt
@@ -203,19 +201,15 @@ python3 -c "from django.core.management.utils import get_random_secret_key; prin
 注意:生成出来不要带 django-insecure- 前缀,那是 Django 自动生成时给占位密钥打的标记,自己生成的安全密钥不需要这个前缀。
 
 
-
 cd backend/django_vue_admin/conf
 cp config.example.py config.py
 vi config.py
 添加 SECRET_KEY 值 数据库名、用户名、密码
 
-
-
 建表
 cd backend
 python manage.py makemigrations
 python manage.py migrate
-
 
 初始化管理员基础菜单
 python scripts/init_data.py
@@ -251,7 +245,6 @@ vi web/src/config/net.config.js
 
 # 启动项目
 npm run serve:rspack
-
 
 访问 http://服务器IP地址:8091/
 
