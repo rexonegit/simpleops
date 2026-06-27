@@ -1,6 +1,3 @@
-# simpleops
-集成阿里云、VMware、Proxmox VE API和项目归属信息维护，数据库、物理机、网络设备及内外网IP地址管理的运维工作台
-
 # 🖥️ 运维工作台 (simpleops)
 
 > 面向多云资源纳管、本地机房资产治理、配置管理与自动化运维的一体化工作平台。
@@ -9,7 +6,7 @@
 
 ## 🚀 功能概览
 
-运维工作台围绕 **云资源同步 → 资产归属匹配 → 配置统一管理** ，将阿里云、本地虚拟化/物理设备、IP 地址库、数据库台账、项目信息及告警登记等分散能力整合到一个统一工作台中。
+运维工作台围绕 **云资源同步 → 资产归属匹配 ** ，将阿里云、本地虚拟化/物理设备、IP 地址库、数据库台账、项目信息及告警登记等分散能力整合到一个统一工作台中。
 
 ---
 
@@ -117,7 +114,16 @@
 - **路径：** `/project`
 - **维护内容：**
   - 所属项目
-  - 环境类型（生产 / 测试 / 开发 / 预发）
+  - 环境类型
+```
+('prod', '生产环境'),
+('test', '测试环境'),
+('dev', '开发环境'),
+('uat', '用户验收环境'),
+('stg', '预生产环境'),
+('dr', '灾备环境'),
+('other', '其他')
+```
   - 负责人
 - **核心作用：** 作为 **所有资源 API 同步时的匹配锚点**，确保每一条资源都能准确挂载到对应项目和责任人
 
@@ -133,4 +139,196 @@
 
 ---
 
-## 
+## 🔐 权限控制 (RBAC)
+
+系统具备标准 RBAC（基于角色的访问控制）权限体系，覆盖 **菜单路由 → 页面按钮** 的细粒度管控。
+
+- **路径：** `/permission`
+- **核心模型：**
+  - 👤 **用户 (User)** — 继承 Django `AbstractUser`，支持多角色挂载
+  - 🛡️ **角色 (Role)** — 权限分配的载体，编码全局唯一
+  - 🗂️ **菜单路由 (Router)** — 对齐 `vue-router`，支持目录 / 菜单 / 按钮 / 外链四种类型
+  - 🔑 **按钮权限 (Permission)** — 与菜单解耦的独立权限标识
+- **权限分配：**
+  - 角色绑定 **菜单权限**（控制左侧菜单可见性，仅目录/菜单/外链）
+  - 角色绑定 **按钮权限**（控制页面内按钮显隐与接口访问）
+  - 用户通过角色间接获得菜单与按钮权限
+- **菜单管理：** 支持树形结构维护、排序、隐藏、缓存(keepAlive)、固定标签(affix)等 vab 特性
+
+---
+
+## 📝 日志审计
+
+系统内置完整的操作审计能力，所有关键行为均可追溯。
+
+- **路径：** `/monitor/logs`
+- **登录日志 (LoginLog)：**
+  - 记录用户名、登录 IP、User-Agent、登录成功/失败状态、登录时间
+  - 用于登录行为审计与异常登录排查
+- **操作日志 (OperationLog)：**
+  - 记录操作人、请求 IP、HTTP 方法、请求路径、操作类型
+  - 记录状态码、耗时(ms)、请求数据、响应数据
+  - 通过中间件自动采集，无需业务代码侵入
+
+---
+
+**安装数据库和 Python 3.12**
+
+```
+安装
+scripts 下有脚本(适配 Rocky Linux 8.10)
+sh install_mysql.sh
+sh install_python3.12.sh
+```
+
+**后端启动步骤**
+
+```
+新建数据库
+CREATE DATABASE django_vue_admin CHARACTER SET utf8mb4;
+create USER 'django_vue_admin'@'localhost' IDENTIFIED BY '你的密码';
+GRANT ALL PRIVILEGES ON django_vue_admin.* TO 'django_vue_admin'@'localhost';
+
+
+后端
+sudo yum install mysql-devel gcc -y
+cd backend
+pip install -r requirements.txt
+
+如果慢使用阿里云源
+pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com -r requirements.txt
+
+生成 SECRET_KEY 值
+python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+注意:生成出来不要带 django-insecure- 前缀,那是 Django 自动生成时给占位密钥打的标记,自己生成的安全密钥不需要这个前缀。
+
+
+
+cd backend/django_vue_admin/conf
+cp config.example.py config.py
+vi config.py
+添加 SECRET_KEY 值 数据库名、用户名、密码
+
+
+
+建表
+cd backend
+python manage.py makemigrations
+python manage.py migrate
+
+
+初始化管理员基础菜单
+python scripts/init_data.py
+
+启动后端
+python manage.py runserver 0.0.0.0:8000
+```
+
+**前端启动步骤**
+
+```
+前端
+前端需要安装 node  
+https://nodejs.org/dist/v20.20.2/node-v20.20.2-linux-x64.tar.xz
+scripts 下有脚本 sh install_node.sh
+
+
+启用 pnpm
+npm install --global corepack@latest
+corepack enable pnpm
+pnpm -v
+
+# 安装依赖
+pnpm i --registry=http://mirrors.cloud.tencent.com/npm/
+
+如果出现脚本警告
+pnpm approve-builds
+
+修改后端配置地址
+vi web/src/config/net.config.js
+192.168.100.100:8000
+192.168.100.100修改为后端服务器IP
+
+# 启动项目
+npm run serve:rspack
+
+
+访问 http://服务器IP地址:8091/
+
+默认管理员
+admin
+123456
+
+
+导入菜单
+cd backend
+python manage.py import_menus --file menu_export.json
+
+备份菜单
+cd backend
+python manage.py export_menus --output=menu_export-`date '+%F-%H%M%S'`.json
+```
+
+
+
+配置账号与 Token
+
+```
+阿里云/Proxmox/vCenter:从 example 复制并填写
+cp backend/aliyun/conf/aliyun.cnf.example backend/aliyun/conf/aliyun.cnf
+cp backend/datacenter/conf/proxmox.cnf.example backend/datacenter/conf/proxmox.cnf
+cp backend/datacenter/conf/vcenter.cnf.example backend/datacenter/conf/vcenter.cnf
+# 然后编辑这三个 .cnf 文件填入真实凭据
+
+
+阿里云模块配置
+backend\aliyun\conf\aliyun.cnf
+配置 
+access_key = 
+access_secret =
+
+支持阿里云多账号，如果只有一个不用的字段 # 注释掉
+
+VMware 和 Proxmox VE
+backend\datacenter\conf\vcenter.cnf 配置 vCenter 地址 用户名 密码 需要有只读权限
+HOST=
+USER=
+PASSWORD=
+
+支持多个 vCenter 如果只有一个不用的字段 # 注释掉
+
+backend\datacenter\conf\proxmox.cnf
+配置 HOST 地址和 token
+
+# 集群1
+# PVE1_HOST=pve2.example.com
+# PVE1_USER=cmdb@pve
+# PVE1_TOKEN=cmdb@pve!cmdb-token=yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy
+# PVE1_VERIFY_SSL=false
+
+Proxmox VE API 配置说明
+1.1 在 PVE 中创建 API 用户
+# 1. 在 PVE 节点上创建 API 用户
+pveum user add cmdb@pve -comment "CMDB Sync User"
+# 2. 创建 API Token（更安全，推荐）
+pveum user token add cmdb@pve cmdb-token --privsep=0
+# 保存输出的 token 值，格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+# 3. 创建角色并授权（只读权限）
+pveum role add CMDBReader -privs "VM.Audit,Datastore.Audit,Pool.Audit,SDN.Audit,Sys.Audit,VM.GuestAgent.Audit"
+记录token 配置到文件中，没加集群就配置多个主机
+```
+
+
+
+PM2 后台运行
+
+```
+【可选】pm2 管理后台前端启动
+npm install pm2 -g
+cd backend/
+pm2 start --name django "python manage.py runserver 0.0.0.0:8000"
+
+cd web/
+pm2 start --name vue3 "npm run serve:rspack"
+```
+
