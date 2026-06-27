@@ -32,7 +32,6 @@ urlpatterns = [
 
     path('api/', include('aliyun.urls')),
     path('api/', include('datacenter.urls')),
-    path('api/', include('auto.urls')),
     path('api/', include('cmdb.urls')),
     path('api/', include('opsmgmt.urls')),
 ]
