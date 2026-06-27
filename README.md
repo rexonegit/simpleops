@@ -197,6 +197,19 @@
 </table>
 
 
+
+**仓库地址**
+
+GitHub
+[https://github.com/rexonegit/simpleops.git](url)
+
+Gitee
+[https://gitee.com/rexonegit/simpleops](url)
+
+GitCode
+[https://gitcode.com/rexonegit/simpleops](url)
+
+
 **安装数据库和 Python 3.12**
 
 ```
