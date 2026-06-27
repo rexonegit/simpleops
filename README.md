@@ -1,6 +1,6 @@
 # 🖥️ 运维工作台 (simpleops)
 
-> 面向多云资源纳管、本地机房资产治理、配置管理与自动化运维的一体化工作平台。
+> 面向多云资源纳管、本地机房 VMware/ProxmoxVE 资产治理、配置管理与自动化运维的一体化工作平台。Django + DRF + MySQL 的后端,Vue 3 + Element Plus + Rspack 的前端。
 
 ---
 
