@@ -1,0 +1,63 @@
+# ===== Python / Django =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# ===== Django 运行时 =====
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# ===== 项目数据文件(运行时生成) =====
+backend/menu_export.json
+backend/menu_export_simple.json
+backend/menu_backup_*.json
+backend/*.json
+
+# ===== 配置文件(含密钥,不提交) =====
+backend/django_vue_admin/conf/config.py
+backend/aliyun/conf/aliyun.cnf
+backend/datacenter/conf/proxmox.cnf
+backend/datacenter/conf/vcenter.cnf
+
+# ===== IDE / 编辑器 =====
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ===== 虚拟环境 =====
+venv/
+env/
+.venv/
+ENV/
+
+# ===== 前端 =====
+node_modules/
+dist/
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.zip
+*.7z
+.history/

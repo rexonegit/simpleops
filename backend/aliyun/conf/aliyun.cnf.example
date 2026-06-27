@@ -1,0 +1,17 @@
+# 阿里云访问密钥配置 - 示例模板
+# 复制为 aliyun.cnf 并填入真实值,aliyun.cnf 不会提交到 git
+
+[aliyun1]
+access_key =
+access_secret =
+regions = cn-shanghai
+
+[aliyun2]
+access_key =
+access_secret =
+regions = cn-shanghai,cn-hangzhou
+
+[aliyun3]
+access_key =
+access_secret =
+regions = cn-shanghai

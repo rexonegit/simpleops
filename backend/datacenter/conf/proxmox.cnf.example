@@ -1,0 +1,25 @@
+# Proxmox VE 集群配置 - 示例模板
+# 复制为 proxmox.cnf 并填入真实值,proxmox.cnf 不会提交到 git
+
+# 集群1
+PVE1_HOST=
+PVE1_USER=cmdb@pve
+# 使用 API Token(推荐) 格式: 用户名!token名=token值
+PVE1_TOKEN=cmdb@pve!cmdb-token=
+# 或使用密码认证(二选一)
+# PVE1_PASSWORD=your_password
+PVE1_VERIFY_SSL=false
+
+# 集群2
+PVE2_HOST=
+PVE2_USER=cmdb@pve
+PVE2_TOKEN=cmdb@pve!cmdb-token=
+# PVE2_PASSWORD=your_password
+PVE2_VERIFY_SSL=false
+
+# 集群3
+PVE3_HOST=
+PVE3_USER=cmdb@pve
+PVE3_TOKEN=cmdb@pve!cmdb-token=
+# PVE3_PASSWORD=your_password
+PVE3_VERIFY_SSL=false

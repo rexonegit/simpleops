@@ -1,0 +1,14 @@
+# vCenter 配置 - 示例模板
+# 复制为 vcenter.cnf 并填入真实值,vcenter.cnf 不会提交到 git
+
+VC1_HOST=
+VC1_USER=
+VC1_PASSWORD=
+
+#VC2_HOST=
+#VC2_USER=
+#VC2_PASSWORD=
+
+#VC3_HOST=
+#VC3_USER=
+#VC3_PASSWORD=
