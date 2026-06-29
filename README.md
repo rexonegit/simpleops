@@ -174,6 +174,12 @@
   <img src="https://github.com/rexonegit/simpleops/blob/main/example/qrcode.jpg">
 </p>
 
+<p align="center">
+  <img src="https://github.com/rexonegit/simpleops/blob/main/example/menu.jpg">
+</p>
+<p align="center">
+  <img src="https://github.com/rexonegit/simpleops/blob/main/example/role.jpg">
+</p>
 
 **演示数据效果图展示：**
 
