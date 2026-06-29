@@ -175,10 +175,10 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/rexonegit/simpleops/blob/main/example/menu.jpg">
+  <img src="https://github.com/rexonegit/simpleops/blob/main/example/menu.png">
 </p>
 <p align="center">
-  <img src="https://github.com/rexonegit/simpleops/blob/main/example/role.jpg">
+  <img src="https://github.com/rexonegit/simpleops/blob/main/example/role.png">
 </p>
 
 **演示数据效果图展示：**
